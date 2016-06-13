@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+  script(src='javascripts/socket.io.js')
+  script.
+    var socket = io('http://localhost:3000');
+    socket.on('connect', function () {
+      console.log('connect');
+    });
+    socket.on('message', function (data) {
+      console.log('data', data);
+      document.getElementById('messages').innerHTML += '<div id="idChild"> message: '+data.message+'</div>';
+      //document.getElementById("messages").innerHTML("<b>"+ data.message+"</b>");
+    });
+    socket.on('disconnect', function () {
+      console.log('disconnect');
+    });
+    function sendData() {
+      if(document.getElementById('message-data').value!='' && document.getElementById('message-data').value){
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", "/api/send-message");
+        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.send(JSON.stringify({"message":document.getElementById('message-data').value}));
+        document.getElementById('message-data').value = '';
+      }
+
+    }
