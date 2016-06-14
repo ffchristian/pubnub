@@ -13,18 +13,22 @@ html
     });
     socket.on('message', function (data) {
       console.log('data', data);
-      document.getElementById('messages').innerHTML += '<div id="idChild"> message: '+data.message+'</div>';
+      document.getElementById('messages').innerHTML += '</br><div id="idChild"> user: '+data.user+' message :'+data.message+'</div>';
       //document.getElementById("messages").innerHTML("<b>"+ data.message+"</b>");
     });
     socket.on('disconnect', function () {
       console.log('disconnect');
     });
     function sendData() {
-      if(document.getElementById('message-data').value!='' && document.getElementById('message-data').value){
+
+      var messageData =document.getElementById('message-data').value;
+      var user =document.getElementById('name-user').value;
+
+      if((messageData!='' && messageData) && (user!='' && user)){
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("POST", "/api/send-message");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xmlhttp.send(JSON.stringify({"message":document.getElementById('message-data').value}));
+        xmlhttp.send(JSON.stringify({"user":user, "message":messageData}));
         document.getElementById('message-data').value = '';
       }
 

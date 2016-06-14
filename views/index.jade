@@ -4,6 +4,8 @@ block content
   h1= title
   p list of messages on this instance.
 
+  | Name:
+  input(type='text', name='message-data', id= 'name-user')
   | Message:
   input(type='text', name='message-data', id= 'message-data')
   input(type='submit',onclick='sendData()', value='Submit')
